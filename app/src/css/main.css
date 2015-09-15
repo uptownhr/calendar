@@ -1,0 +1,15 @@
+.calendar{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.week{
+    flex: 1;
+    display: flex;
+}
+.day{
+    flex: 1;
+    flex-basis: 1;
+
+}
