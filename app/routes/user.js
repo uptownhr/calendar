@@ -6,24 +6,19 @@ const User = require('../models/User')
 
 router.post('/signup', function *(next){
   this.checkBody('email').isEmail()
+  this.checkBody('username').notEmpty().len(4,20)
   this.checkBody('password').notEmpty().len(6,20).sha1()
 
   if(this.errors){
     return this.body = this.errors
   }
 
-  var user = new User({
-    email: this.request.body.email,
-    password: this.request.body.password
-  })
+  var user = new User(this.request.body)
 
   var saved = yield user.save()
-  //this.body = saved
-  console.log(this.req.login)
+
   this.req.logIn(user, function(err){
-    console.log('wtf');
-    console.log(err)
-    this.response.redirect('/');
+    this.redirect('/');
   }.bind(this))
 })
 

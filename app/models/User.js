@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const sha1 = require('node-sha1')
 
 var userSchema = new mongoose.Schema({
+  username: {type: String, unique: true, lowercase: true},
   email: { type: String, unique: true, lowercase: true },
   password: String,
 

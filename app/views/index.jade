@@ -5,6 +5,8 @@ block content
     div.row
       div.col-md-12
         form.well.signup(action="/users/signup", method="POST")
+          | Username
+          input(type="text", name="username")
           | Email
           input(type="text", name="email")
           | Pass

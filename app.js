@@ -59,13 +59,24 @@ app.use(function *(next){
   try{
     yield next
   }catch(err){
-    this.body = err
+    console.log('error',err)
+    this.status = err.status || 500
+    this.body = err.message
   }
 })
 
 router.get('/', function *(next){
-  console.log(this.req.user)
-  this.render('index')
+  if(this.req.user){
+    this.render('calendar')
+  }else{
+    this.render('index')
+  }
+})
+
+router.get('/logout', function *(next){
+  console.log('logging out')
+  this.req.logout()
+  this.redirect('/')
 })
 
 app.use(router.routes())
