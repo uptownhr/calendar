@@ -1,0 +1,19 @@
+extends layout
+block content
+  div.calendar
+    div.month
+      h1=moment().format("MMMM D")
+    - today = moment().date()
+    - month = moment( [moment().year(),moment().month()]  )
+    - firstDayMonth = moment( moment().date(1) ).day()
+    - start_day = 1 - firstDayMonth
+    while start_day <= moment().daysInMonth()
+      div.week
+        - dayofweek = 1
+        while dayofweek <= 7
+          -dayofweek++
+          if start_day > 0 && start_day <= moment().daysInMonth()
+            div.day= start_day++
+          else
+            - start_day++
+            div.day= ''
