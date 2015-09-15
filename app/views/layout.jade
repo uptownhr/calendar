@@ -2,5 +2,7 @@ html
   head
     link(rel="stylesheet" type="text/css" href="/css/main.css")
   body
+    if user
+      a(href="/users/logout") logout
     block content
     script(src="/js/app.js")

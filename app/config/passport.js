@@ -1,3 +1,4 @@
+"use strict"
 var _ = require('lodash');
 var passport = require('koa-passport');
 var LocalStrategy = require('passport-local').Strategy;

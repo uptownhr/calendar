@@ -1,3 +1,4 @@
+"use strict"
 const mongoose = require('mongoose')
 const sha1 = require('node-sha1')
 

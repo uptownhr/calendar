@@ -34,9 +34,6 @@ const jade = new Jade({
   debug: false,
   pretty: false,
   compileDebug: false,
-  locals: {
-    moment: moment
-  },
   basedir: 'app/views',
   helperPath: [
     { _: _ },
@@ -55,6 +52,7 @@ app.use(session(app))
 app.use(passport.initialize())
 app.use(passport.session())
 
+//custom middlewares
 app.use(function *(next){
   try{
     yield next
@@ -65,6 +63,11 @@ app.use(function *(next){
   }
 })
 
+app.use(function *(next){
+  jade.locals.user = this.req.user
+  yield next
+})
+
 router.get('/', function *(next){
   if(this.req.user){
     this.render('calendar')
@@ -73,11 +76,7 @@ router.get('/', function *(next){
   }
 })
 
-router.get('/logout', function *(next){
-  console.log('logging out')
-  this.req.logout()
-  this.redirect('/')
-})
+
 
 app.use(router.routes())
 app.use(userRoutes.routes())

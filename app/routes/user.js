@@ -22,4 +22,10 @@ router.post('/signup', function *(next){
   }.bind(this))
 })
 
+router.get('/logout', function *(next){
+  console.log('logging out')
+  this.req.logout()
+  this.redirect('/')
+})
+
 module.exports = router
