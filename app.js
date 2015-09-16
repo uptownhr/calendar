@@ -95,7 +95,7 @@ router.get('/', function *(next){
     })
 
   }else{
-    this.render('index')
+    this.body = this.render('index')
   }
 })
 
