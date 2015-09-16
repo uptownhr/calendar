@@ -5,11 +5,9 @@ require('moment-range')
 const _ = require('lodash')
 
 const koa = require('koa')
-const views = require('koa-views')
 const serve = require('koa-static')
 const router = require('koa-router')()
 const jade = require('jade')
-//const Jade = require('koa-jade')
 
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session')
@@ -39,20 +37,6 @@ app.use(function *(next){
 
   yield next
 })
-/*const jade = new Jade({
-  viewPath: 'app/views',
-  debug: true,
-  pretty: false,
-  compileDebug: false,
-  basedir: 'app/views',
-  helperPath: [
-    { _: _ },
-    { moment: moment }
-  ],
-  noCache: false
-})
-
-jade.options.noCache = false*/
 
 app.use( serve(__dirname + '/public') )
 app.use(bodyParser())
