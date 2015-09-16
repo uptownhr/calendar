@@ -1,19 +1,32 @@
+
+
+
 extends layout
 block content
   div.calendar
-    div.month
-      h1=moment().format("MMMM D")
-    - today = moment().date()
-    - month = moment( [moment().year(),moment().month()]  )
-    - firstDayMonth = moment( moment().date(1) ).day()
+    div.month(style="position: relative")
+      h1=date.format("MMMM D")
+
+      span.pull-right(style="position: absolute; bottom:0; right: 0;")
+        - next = moment(date).add(1, 'month')
+        - previous = moment(date).subtract(1,'month')
+        a(href="?date=#{previous.format('YYYY-MM')}") Previous
+        | |
+        a(href="?date=#{next.format('YYYY-MM')}") Next
+    - today = moment().format("MM D")
+    - firstDayMonth = moment( date.date(1) ).day()
     - start_day = 1 - firstDayMonth
-    while start_day <= moment().daysInMonth()
+    each week in month
       div.week
-        - dayofweek = 1
-        while dayofweek <= 7
-          -dayofweek++
-          if start_day > 0 && start_day <= moment().daysInMonth()
-            div.day= start_day++
+        - dayofweek = 0
+        while dayofweek < 7
+          -day = week[dayofweek]
+          if day == undefined
+            div.day=""
           else
-            - start_day++
-            div.day= ''
+            if today == day.format("MM D")
+              div.day
+                h3=day.date()
+            else
+              div.day=day.date()
+          -dayofweek++

@@ -1,11 +1,15 @@
 "use strict"
 const moment = require('moment')
+require('moment-range')
+
 const _ = require('lodash')
 
 const koa = require('koa')
+const views = require('koa-views')
 const serve = require('koa-static')
 const router = require('koa-router')()
-const Jade = require('koa-jade')
+const jade = require('jade')
+//const Jade = require('koa-jade')
 
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session')
@@ -28,20 +32,28 @@ mongoose.connection.on('open', function(){
 
 
 var app = koa()
+app.use(function *(next){
+  this.render = function(name, opts){
+    return jade.renderFile( 'app/views/' + name + '.jade', _.merge(this.locals,opts) )
+  }.bind(this)
 
-const jade = new Jade({
+  yield next
+})
+/*const jade = new Jade({
   viewPath: 'app/views',
-  debug: false,
+  debug: true,
   pretty: false,
   compileDebug: false,
   basedir: 'app/views',
   helperPath: [
     { _: _ },
     { moment: moment }
-  ]
+  ],
+  noCache: false
 })
 
-app.use(jade.middleware)
+jade.options.noCache = false*/
+
 app.use( serve(__dirname + '/public') )
 app.use(bodyParser())
 app.use(validator())
@@ -57,26 +69,52 @@ app.use(function *(next){
   try{
     yield next
   }catch(err){
-    console.log('error',err)
     this.status = err.status || 500
     this.body = err.message
   }
 })
 
 app.use(function *(next){
-  jade.locals.user = this.req.user
+  //jade.locals.user = this.req.user
+  this.locals = {
+    user: this.req.user,
+    moment: moment
+  }
   yield next
 })
 
 router.get('/', function *(next){
   if(this.req.user){
-    this.render('calendar')
+    var date = moment(this.query.date).utc() || moment().utc()
+
+    var month = yield monthArr(date.range('month'));
+
+    this.body = this.render('calendar',{
+      month: month,
+      date: date
+    })
+
   }else{
     this.render('index')
   }
 })
 
+function monthArr(range){
+  var month = {}
 
+  range.by('days', function(day){
+    var week = day.week()
+    var day_of_week = day.day()
+
+    if(month[week] == undefined ){
+      month[week] = {};
+    }
+
+    month[week][day_of_week] = day
+  })
+
+  return _.values(month)
+}
 
 app.use(router.routes())
 app.use(userRoutes.routes())
