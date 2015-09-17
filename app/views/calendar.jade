@@ -1,11 +1,9 @@
-
-
-
 extends layout
 block content
   div.calendar
+    div.background
     div.month(style="position: relative")
-      h1=date.format("MMMM D")
+      h1=date.format("MMMM D, YYYY")
 
       span.pull-right(style="position: absolute; bottom:0; right: 0;")
         - next = moment(date).add(1, 'month')
@@ -16,17 +14,24 @@ block content
     - today = moment().format("MM D")
     - firstDayMonth = moment( date.date(1) ).day()
     - start_day = 1 - firstDayMonth
+    div.header
+      div.day= 'monday'
+      div.day= 'tuesday'
+      div.day= 'wednesday'
+      div.day= 'thursday'
+      div.day= 'friday'
+      div.day= 'saturday'
+      div.day= 'sunday'
     each week in month
       div.week
-        - dayofweek = 0
-        while dayofweek < 7
+        - dayofweek = 1
+        while dayofweek <= 7
           -day = week[dayofweek]
           if day == undefined
-            div.day=""
+            div.day= ""
           else
             if today == day.format("MM D")
-              div.day
-                h3=day.date()
+              div.day.today= day.date()
             else
-              div.day=day.date()
+              div.day= day.date()
           -dayofweek++

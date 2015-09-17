@@ -71,7 +71,7 @@ router.get('/', function *(next){
   if(this.req.user){
     var date = moment(this.query.date).utc() || moment().utc()
 
-    var month = yield monthArr(date.range('month'));
+    var month = yield monthArr(date.range('month'))
 
     this.body = this.render('calendar',{
       month: month,
@@ -84,11 +84,13 @@ router.get('/', function *(next){
 })
 
 function monthArr(range){
+  console.log(range)
   var month = {}
 
   range.by('days', function(day){
-    var week = day.week()
-    var day_of_week = day.day()
+    var week = parseInt(day.isoWeek())
+    console.log(week, day.format("YYYY MM DD"))
+    var day_of_week = day.isoWeekday()
 
     if(month[week] == undefined ){
       month[week] = {};
@@ -96,7 +98,7 @@ function monthArr(range){
 
     month[week][day_of_week] = day
   })
-
+  console.log(month)
   return _.values(month)
 }
 

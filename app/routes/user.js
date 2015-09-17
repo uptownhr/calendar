@@ -4,7 +4,8 @@ const router = require('koa-router')({
 })
 const User = require('../models/User')
 
-router.post('/signup', function *(next){
+router
+  .post('/signup', function *(next){
   this.checkBody('email').isEmail()
   this.checkBody('username').notEmpty().len(4,20)
   this.checkBody('password').notEmpty().len(6,20).sha1()
@@ -21,6 +22,19 @@ router.post('/signup', function *(next){
     this.redirect('/');
   }.bind(this))
 })
+  .post('/login', function *(next){
+    var username = this.request.body.username
+    var password = this.request.body.password
+
+    var user = yield User.findOne({username: username})
+    console.log(user)
+    if( user.comparePassword(password) ){
+      this.req.logIn(user, function(err){
+        console.log('err',err,'wtf')
+        this.redirect('/')
+      }.bind(this) )
+    }
+  })
 
 router.get('/logout', function *(next){
   console.log('logging out')

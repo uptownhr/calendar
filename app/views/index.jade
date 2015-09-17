@@ -5,10 +5,18 @@ block content
     div.row
       div.col-md-12
         form.well.signup(action="/users/signup", method="POST")
+          h2 Register
           | Username
           input(type="text", name="username")
           | Email
           input(type="text", name="email")
           | Pass
           input(type="password", name="password")
+          input(type="submit")
+        form.well.login(action="/users/login", method="POST")
+          h2 Login
+          | Username
+          input(type="text", name="username")
+          | Pass
+          input(type="pass", name="password")
           input(type="submit")
