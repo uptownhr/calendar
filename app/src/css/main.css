@@ -5,8 +5,13 @@ body{
     flex-direction: column;
     padding: 15px;
 }
+
+#calendar{
+    display: flex;
+    flex: 1;
+}
+
 .calendar{
-    height: 100%;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -22,6 +27,13 @@ body{
 
 .header{
     display: flex;
+}
+
+.month{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
 }
 
 .week{

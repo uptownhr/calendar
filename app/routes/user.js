@@ -27,7 +27,6 @@ router
     var password = this.request.body.password
 
     var user = yield User.findOne({username: username})
-    console.log(user)
     if( user.comparePassword(password) ){
       this.req.logIn(user, function(err){
         console.log('err',err,'wtf')

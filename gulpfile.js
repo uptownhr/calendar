@@ -53,9 +53,9 @@ gulp.task('watchify', function() {
 
 const getBrowserifyInstance = function() {
   // create browserify instance
-  const b = browserify('app/src/js/main.js', {
+  const b = browserify('app/src/js/main', {
     debug: true,
-    extensions: ['.js'],
+    extensions: ['.jsx'],
 
     // watchify args
     cache: {},

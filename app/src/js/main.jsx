@@ -1,8 +1,15 @@
 'use strict'
 const $ = require('jquery')
 const moment = require('moment')
+const React = require('react')
+const Calendar = require('./components/calendar')
 
+React.render(
+  <Calendar />,
+  $('#calendar')[0]
+)
 
+/*
 $(document).ready( () => {
   var start = 0
   var end = 0
@@ -33,17 +40,15 @@ $(document).ready( () => {
 
 var render_events = function(events){
   events.forEach(function(event){
-    console.log(event)
-    console.log(event.date)
     var day = moment(event.date).date();
-    console.log(day)
     var $day = get_day(day);
 
     $day.then( function(test){
-
-      test.append(event.title)
+      var $ul = $('<ul>')
+      var $li = $('<li>').text(event.title).appendTo($ul)
+      console.log($ul,test)
+      test.append($ul)
     })
-    console.log($day)
   })
 }
 
@@ -92,4 +97,4 @@ var test_json = [
     type: 'text',
     provider: 'calendar'
   }
-]
+]*/
