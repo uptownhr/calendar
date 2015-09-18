@@ -10,6 +10,10 @@ const {Row, Col, Nav, Navbar, NavItem} = require('react-bootstrap')
 class Month extends React.Component{
   constructor(props){
     super(props)
+
+    this.state = {
+      date: props.month
+    }
   }
 
   weeks_in_range(date){
@@ -21,18 +25,32 @@ class Month extends React.Component{
     return weeks
   }
 
+  changeMonth(direction){
+
+    var next;
+    if(direction == 'next'){
+      this.state.date.add(1, 'month')
+    }else{
+      this.state.date.subtract(1, 'month')
+    }
+
+    this.setState({
+      date: this.state.date
+    })
+  }
+
   render(){
-    var date = this.props.month
-    var month = date.month()
-    var weeks = this.weeks_in_range(date)
+    var month = this.state.date.month()
+    var weeks = this.weeks_in_range(this.state.date)
 
     return(
       <div className="month">
         <div style={{position: 'relative'}}>
-          <h1>{date.format("MMMM DD, YYYY")}</h1>
-          <span style={{position: 'absolute', right:0, bottom:0}}>
-            Previus | Next
-          </span>
+          <h1>{this.state.date.format("MMMM DD, YYYY")}</h1>
+          <ul className="pagination pagination-sm" style={{position: 'absolute', right:0, bottom:0}}>
+            <li><a onClick={this.changeMonth.bind(this, 'prev')}>Previous</a></li>
+            <li><a onClick={this.changeMonth.bind(this, 'next')}>Next</a></li>
+          </ul>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ flex: 1, border: '1px solid grey', padding: '10px' }}>Sunday</div>
