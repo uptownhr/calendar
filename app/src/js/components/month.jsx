@@ -31,9 +31,7 @@ class Month extends React.Component{
     return(
       <div className="month">
         <h1>{moment().format("MMM DD, YYYY")}</h1>
-        { this.state.weeks.map( week =>
-          <Week key={week} week={week} />
-        ) }
+        { this.state.weeks.map( week =>  <Week key={week} week={week} /> ) }
       </div>
     );
   }
