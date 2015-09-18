@@ -12,7 +12,8 @@ class Month extends React.Component{
     super(props)
 
     this.state = {
-      date: props.month
+      date: props.month,
+      selectionRange: moment.range()
     }
   }
 
@@ -26,7 +27,6 @@ class Month extends React.Component{
   }
 
   changeMonth(direction){
-
     var next;
     if(direction == 'next'){
       this.state.date.add(1, 'month')
@@ -37,6 +37,17 @@ class Month extends React.Component{
     this.setState({
       date: this.state.date
     })
+  }
+
+  onMouseHover(day){
+    console.log('hover', day)
+  }
+
+  onMouseDown(day){
+    var range = moment.range(day, day)
+
+    this.state.selectionRange = range
+    this.setState(this.state)
   }
 
   render(){
@@ -61,7 +72,10 @@ class Month extends React.Component{
           <div style={{ flex: 1, border: '1px solid grey', padding: '10px' }}>Friday</div>
           <div style={{ flex: 1, border: '1px solid grey', padding: '10px' }}>Saturday</div>
         </div>
-        { weeks.map( week =>  <Week key={week} month={month} week={week} /> ) }
+        { weeks.map( week =>  <Week key={week} month={month}
+                                    week={week} onMouseHover={this.onMouseHover.bind(this)}
+                                    onMouseDown={this.onMouseDown.bind(this)} selectionRange={this.state.selectionRange} />
+        ) }
       </div>
     );
   }
