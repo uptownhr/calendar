@@ -1,7 +1,8 @@
 'use strict';
 
-const React = require('react');
-const Month = require('./month');
+const React = require('react')
+const Month = require('./month')
+const moment = require('moment')
 
 class Calendar extends React.Component{
   constructor(props){
@@ -9,14 +10,16 @@ class Calendar extends React.Component{
   }
 
   render(){
+    var date = moment(this.props.date)
+
     return(
       <div className="calendar">
         <div className="background">
         </div>
-        <Month />
+        <Month month={date} />
       </div>
     );
   }
 }
 
-module.exports = Calendar;
+module.exports = Calendar

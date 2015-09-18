@@ -13,7 +13,7 @@ class Week extends React.Component{
     var range = date.range('week')
     var days = []
     range.by('days', function(day){
-      days.push(day.date())
+      days.push(day)
     })
     return days
   }
@@ -24,7 +24,7 @@ class Week extends React.Component{
 
     return(
       <div className="week">
-        {days.map( day => <Day key={day} day={day}/>)}
+        {days.map( (day,index) => <Day key={index} month={this.props.month} day={day}/>)}
       </div>
     );
   }

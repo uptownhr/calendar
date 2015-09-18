@@ -8512,6 +8512,10 @@ body{
     padding: 10px;
 }
 
+.day.inactive{
+    color: #aaa;
+}
+
 .day.selected{
     background-color: #8fdf82;
 }

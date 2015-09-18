@@ -8,9 +8,17 @@ class Day extends React.Component{
   }
 
   render(){
+    var day = this.props.day
+    var date = day.date()
+    var inactive = ''
+
+    if(day.month() != this.props.month){
+      inactive = 'inactive'
+    }
+
     return(
-      <div className="day">
-        {this.props.day}
+      <div className={"day " + inactive}>
+        {date}
       </div>
     );
   }
