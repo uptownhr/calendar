@@ -17,22 +17,30 @@ class Day extends React.Component{
     }
 
     var style = {
-      backgroundColor: this.props.selected? '#333': ''
+      backgroundColor: this.props.selected? '#add8e6': ''
     }
 
     return(
-      <div onMouseOver={this.handleMouseOver.bind(this, day)} onMouseDown={this.handleMouseDown.bind(this, day)} className={"day " + inactive} style={style}>
+      <div onMouseOver={this.handleMouseOver.bind(this, day)}
+           onMouseDown={this.handleMouseDown.bind(this, day)}
+           onMouseUp={this.handleMouseUp.bind(this, day)}
+           className={"day " + inactive} style={style}
+        >
         {date}
       </div>
     );
   }
 
   handleMouseOver(day){
-    this.props.onMouseHover(day)
+    this.props.calendar.over(day)
   }
 
   handleMouseDown(day){
-    this.props.onMouseDown(day)
+    this.props.calendar.down(day)
+  }
+
+  handleMouseUp(day){
+    this.props.calendar.up(day)
   }
 }
 

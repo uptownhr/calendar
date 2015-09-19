@@ -20,7 +20,7 @@ class Week extends React.Component{
 
   selected(day){
 
-    return this.props.selectionRange.contains(day)
+    return this.props.calendar.selectionRange.contains(day)
   }
 
   render(){
@@ -29,9 +29,9 @@ class Week extends React.Component{
 
     return(
       <div className="week">
-        {days.map( (day,index) => <Day key={index} month={this.props.month}
-                                       day={day} onMouseHover={this.props.onMouseHover}
-                                       onMouseDown={this.props.onMouseDown} selected={this.selected(day)} />)}
+        {days.map( (day,index) => <Day key={index} month={this.props.month} day={day}
+                                       calendar={this.props.calendar}
+                                       selected={this.selected(day)} />)}
       </div>
     );
   }
