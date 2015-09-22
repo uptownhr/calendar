@@ -5,8 +5,6 @@ const Week = require('./week')
 const moment = require('moment')
 require('moment-range')
 
-const {Row, Col, Nav, Navbar, NavItem} = require('react-bootstrap')
-
 class Month extends React.Component{
   constructor(props){
     super(props)
