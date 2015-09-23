@@ -19,7 +19,7 @@ router
   var saved = yield user.save()
 
   this.req.logIn(user, function(err){
-    this.redirect('/');
+    this.redirect('/')
   }.bind(this))
 })
   .post('/login', function *(next){

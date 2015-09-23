@@ -1,6 +1,7 @@
 'use strict'
 
 const React = require('react')
+const Modal = require('react-modal')
 const Week = require('./week')
 const moment = require('moment')
 require('moment-range')
@@ -12,8 +13,16 @@ class Month extends React.Component{
     this.state = {
       date: props.month,
       selectionRange: moment.range(),
-      mouseDown: false
+      mouseDown: false,
+      modal: {
+        isOpen: false,
+        component: null
+      }
     }
+  }
+
+  componentDidMount(){
+
   }
 
   weeks_in_range(date){
@@ -57,6 +66,17 @@ class Month extends React.Component{
   onMouseUp(day){
     this.state.mouseDown = false
     this.setState(this.state)
+    this.showModal()
+  }
+
+  showModal(component){
+    this.state.modal.isOpen = true
+    this.setState(this.state)
+  }
+
+  closeModal(){
+    this.state.modal.isOpen = false
+    this.setState(this.state)
   }
 
   render(){
@@ -87,10 +107,14 @@ class Month extends React.Component{
                                       over: this.onMouseOver.bind(this),
                                       down: this.onMouseDown.bind(this),
                                       up: this.onMouseUp.bind(this),
-                                      selectionRange: this.state.selectionRange
+                                      selectionRange: this.state.selectionRange,
+                                      modal: this.showModal.bind(this)
                                     }}
             />
         ) }
+        <Modal isOpen={this.state.modal.isOpen} onRequestClose={this.closeModal.bind(this)}>
+          {this.state.selectionRange.start.toString()} - {this.state.selectionRange.end.toString()}
+        </Modal>
       </div>
     );
   }

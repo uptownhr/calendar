@@ -1,6 +1,5 @@
 'use strict'
 const $ = require('jquery')
-const moment = require('moment')
 const React = require('react')
 const Calendar = require('./components/calendar')
 
